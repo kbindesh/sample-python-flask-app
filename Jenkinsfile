@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 script {
-                    withKubeConfig(credentials: 'kubeconfig', serverUrl: 'https://C032F974A18F6C2A8C3B3F2F1BDC08DD.gr7.us-east-1.eks.amazonaws.com') {
+                    withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://C032F974A18F6C2A8C3B3F2F1BDC08DD.gr7.us-east-1.eks.amazonaws.com']) {
                         sh 'kubectl version'
                         sh 'kubectl get nodes'
                     }
