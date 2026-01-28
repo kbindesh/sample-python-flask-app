@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 script {
-                    withAWS(credentials: "${env.AWS_CREDS}", region: "${env.EKS_REGION}") {
+                    withAWS(credentials: 'AWS_CREDS', region: 'us-east-1') {
                         sh 'aws sts get-caller-identity' // Verify credentials
                         sh 'kubectl version'
                         sh 'aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region us-east-1'
