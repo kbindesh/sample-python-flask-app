@@ -4,6 +4,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker_creds')
         EKS_CLUSTER_NAME = 'labekscluster'
         EKS_REGION = 'us-east-1'
+        AWS_CRED_ID = 'AWS_CREDS'
     }
     stages { 
 
@@ -30,10 +31,11 @@ pipeline {
         stage('K8s Deploy') {
             steps {
                 script {
-                    withAWS(credentials: 'AWS_CREDS', region: 'us-east-1') {
+                    withAWS(credentials: AWS_CREDS, region: EKS_REGION) {
+                        sh 'aws sts get-caller-identity' // Verify credentials
                         sh 'kubectl version'
                         sh 'aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region us-east-1'
-                        sh 'kubectl apply -f deployment.yaml'
+                        sh 'kubectl get nodes'
                     }
                 }
             }
