@@ -42,8 +42,9 @@ pipeline {
             steps {
                 script {
                     withKubeConfig(credentialsId: 'my-kubeconfig-id') {
+                        def kubeconfigPath = '/var/lib/jenkins/.kube/config'
                         sh '/opt/kubectl version'
-                        sh '/opt/kubectl get nodes'
+                        sh "/opt/kubectl --kubeconfig=${kubeconfigPath} get nodes"
                     }
                 }
             }
