@@ -30,11 +30,11 @@ pipeline {
                     sh "aws configure set region ${AWS_REGION}"
                     sh "aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}"
                     echo "Configured kubeconfig for EKS cluster: ${EKS_CLUSTER_NAME}"
-                    script {
-                        def kubeconfigPath = '/var/lib/jenkins/.kube/config'
-                        sh '/opt/kubectl version'
-                        sh "/opt/kubectl --kubeconfig=${kubeconfigPath} get nodes"
-                    }
+                }
+                script {
+                    def kubeconfigPath = '/var/lib/jenkins/.kube/config'
+                    sh '/opt/kubectl version'
+                    sh "/opt/kubectl --kubeconfig=${kubeconfigPath} get nodes"
                 }
             }
         }
