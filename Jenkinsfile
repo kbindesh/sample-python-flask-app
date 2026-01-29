@@ -32,14 +32,14 @@ pipeline {
             steps {
                 script {
                     withKubeConfig(credentialsId: 'my-kubeconfig-id') {
-                        sh 'kubectl version'
-                        sh 'kubectl get nodes'
+                        sh '/opt/kubectl version'
+                        sh '/opt/kubectl get nodes'
                     }
                 }
             }
-        }
-}
-post {
+        }  
+    }
+    post {
         always {
             sh 'docker logout'
         }
