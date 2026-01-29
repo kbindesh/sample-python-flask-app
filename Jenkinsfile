@@ -31,21 +31,14 @@ pipeline {
                     sh "aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}"
                     echo "Configured kubeconfig for EKS cluster: ${EKS_CLUSTER_NAME}"
                 }
-                script {
-                    def kubeconfigPath = '/var/lib/jenkins/.kube/config'
-                    sh '/opt/kubectl version'
-                    sh "/opt/kubectl --kubeconfig=${kubeconfigPath} get nodes"
-                }
             }
         }
         stage('Deploy to EKS') {
             steps {
-                script {
-                    withKubeConfig(credentialsId: 'my-kubeconfig-id') {
-                        def kubeconfigPath = '/var/lib/jenkins/.kube/config'
-                        sh '/opt/kubectl version'
-                        sh "/opt/kubectl --kubeconfig=${kubeconfigPath} get nodes"
-                    }
+                // Use the ID defined in the Jenkins Credentials Manager
+                withAWS(credentials: env.AWS_CRED_ID, region: env.AWS_REGION) { 
+                    sh 'aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}'
+                    sh '/opt/kubectl get nodes' // Example kubectl command
                 }
             }
         }  
