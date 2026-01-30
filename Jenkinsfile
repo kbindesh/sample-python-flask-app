@@ -40,7 +40,7 @@ pipeline {
             steps {
                 withAWS(credentials: env.AWS_CRED_ID, region: env.AWS_REGION) {
                     sh 'kubectl get pods -A'
-                    sh 'kubectl apply -f k8s-specifications\flaskapp-deployment.yml'
+                    sh 'kubectl apply -f k8s-specifications/flaskapp-deployment.yml'
                     echo "Python Flask app deployed successfully"
                 }
             }
