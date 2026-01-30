@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: flaskapp-c
-          image: kbindesh/flaskapp:
+          image: kbindesh/flaskapp:1
           ports:
             - containerPort: 80
 ---
