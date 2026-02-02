@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker_creds')
-        EKS_CLUSTER_NAME = 'labekscluster'
+        EKS_CLUSTER_NAME = 'labekscluster1'
         AWS_REGION = 'us-east-1'
         AWS_CRED_ID = 'aws-credentials'
         PATH = "$PATH:/opt"
