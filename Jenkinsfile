@@ -2,9 +2,10 @@ pipeline {
     agent any 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-creds')
+        AWS_CRED_ID = 'aws-credentials'
         EKS_CLUSTER_NAME = 'labekscluster'
         AWS_REGION = 'us-east-1'
-        AWS_CRED_ID = 'aws-credentials'
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
         PATH = "$PATH:/opt"
     }
     stages { 
@@ -34,6 +35,12 @@ pipeline {
                     sh "aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}"
                     echo "Configured kubeconfig for EKS cluster: ${EKS_CLUSTER_NAME}"
                 }
+            }
+        }
+        stage('Update Image Tag') {
+            steps {
+                // Replace placeholder with actual tag
+                sh "sed -i 's|__IMAGE_TAG__|${IMAGE_TAG}|g' k8s-specifications/flaskapp-deployment.yml"
             }
         }
         stage('Deploy App to EKS') {
