@@ -1,7 +1,7 @@
 pipeline {
     agent any 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker_creds')
+        DOCKERHUB_CREDENTIALS = credentials('docker-creds')
         EKS_CLUSTER_NAME = 'labekscluster'
         AWS_REGION = 'us-east-1'
         AWS_CRED_ID = 'aws-credentials'
