@@ -21,7 +21,7 @@ pipeline {
                 echo "Successfully connected to DockerHub Account"
             }
         }
-        stage('Push Docker Image') {
+        stage('Push Image to Registry') {
             steps{
                 sh 'docker push kbindesh/flaskapp:$BUILD_NUMBER'
                 echo "Pushed the kbindesh/flaskapp:${BUILD_NUMBER} image successfully"
@@ -43,7 +43,7 @@ pipeline {
                 sh "sed -i 's|__IMAGE_TAG__|${IMAGE_TAG}|g' k8s-specifications/flaskapp-deployment.yml"
             }
         }
-        stage('Deploy App to EKS') {
+        stage('Deploy App to EKS Cluster') {
             steps {
                 withAWS(credentials: env.AWS_CRED_ID, region: env.AWS_REGION) {
                     sh 'kubectl get pods -A'
